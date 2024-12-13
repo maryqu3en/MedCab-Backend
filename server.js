@@ -27,6 +27,9 @@ app.get('/', (req, res) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date() });
+});
 
 app.use(notFound);
 app.use(errorHandler);
