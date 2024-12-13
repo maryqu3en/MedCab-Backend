@@ -4,24 +4,37 @@ html
     title MedCab APIs - A Clinic Management System
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet" href="/styles/index.css")
-    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap")
+    link(rel="stylesheet", href="/styles/index.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap")
   body
-    header
-      h1 Gynecology Clinic Management API
-      p Streamline your clinic operations with ease.
+    nav.navbar
+      h1.nav-title Clinic Management System
+      div.nav-actions
+        button(onclick="navigateToDocs()") View API Docs
+        a(href="mailto:devs@example.com") Contact Developers
 
-    main
-      section
+    main.main-content
+      div.card.left-section
+        img(src="/images/clinic.jpg", alt="Clinic Image")
+      
+      div.card.right-section
         h2 Key Features
         ul
-          li Secure and fast API endpoints
-          li Easy integration for clinic workflows
-          li Comprehensive documentation
-      button(onclick="navigateToDocs()") View API Docs
-      a(href="mailto:devs@example.com") Contact Developers
+          li
+            span 
+            | Secure and fast API endpoints
+          li
+            span 
+            | Easy integration for clinic workflows
+          li
+            span 
+            | Comprehensive documentation
+        button(onclick="navigateToDocs()") View API Docs
 
-    footer
+    footer.footer
       p © 2024 MedCab APIs. All rights reserved.
+      div.footer-actions
+        button(onclick="navigateToDocs()") View API Docs
+        a(href="mailto:devs@example.com") Contact Developers
 
     script(src="/scripts/script.js")
