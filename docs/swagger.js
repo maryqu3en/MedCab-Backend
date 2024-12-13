@@ -14,6 +14,10 @@ const options = {
         url: "http://localhost:3000",
         description: "Local server",
       },
+      {
+        url: "https://medcab-backend.onrender.com/",
+        description: "Developemnet server",
+      },
     ],
   },
   apis: ["./routes/*.routes.js"],
