@@ -1,0 +1,111 @@
+:root {
+  --primary-color: #d60056;
+  --secondary-color: #9f0040;
+  --accent-color: #03dac6;
+  --accent-color-dark: #018786;
+  --text-color: #fff;
+  --highlight-color: #ffd600;
+  --background-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --button-gradient: linear-gradient(90deg, var(--accent-color), var(--accent-color-dark));
+  --button-gradient-hover: linear-gradient(90deg, var(--accent-color-dark), var(--accent-color));
+}
+
+body, h1, h2, p, ul, li, a, button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--background-gradient);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+main {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--highlight-color);
+}
+
+ul {
+  list-style: none;
+  margin: 1rem 0 2rem 0;
+  padding: 0;
+}
+
+ul li {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+button {
+  background: var(--button-gradient);
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: var(--button-gradient-hover);
+}
+
+a {
+  margin-top: 1rem;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--highlight-color);
+}
+
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
