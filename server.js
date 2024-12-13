@@ -1,10 +1,11 @@
 const express = require('express');
+const path = require('path');
 // const initializeSocket = require('./config/socket.config');
 const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/mongodb');
 const { testPGConnection } = require('./config/postgres');
-const { swaggerUi, specs } = require("./docs/swagger");
+const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 
@@ -16,11 +17,15 @@ app.use(cors());
 
 app.use(logger);
 
+app.set("view engine", "pug");
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send("Welcome to MedCab, a Medical Care Management System API.");
+  res.render('index');
 });
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
 
 app.use(notFound);
