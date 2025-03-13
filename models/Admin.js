@@ -7,13 +7,35 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        Name: { type: DataTypes.STRING, allowNull: false },
-        Email: { type: DataTypes.STRING, allowNull: false, unique: true },
-        Password: { type: DataTypes.STRING, allowNull: false },
-        CreatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        UpdatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        DeletedAt: { type: DataTypes.DATE },
+        Name: { 
+            type: DataTypes.STRING, 
+            allowNull: false 
+        },
+        Email: { 
+            type: DataTypes.STRING, 
+            allowNull: false, 
+            unique: true 
+        },
+        Password: { 
+            type: DataTypes.STRING, 
+            allowNull: false 
+        },
+    }, 
+    {
+        timestamps: true,
+        paranoid: true,
+        indexes: [
+            {
+                fields: ['Email'],
+                unique: true,
+            }
+        ],
     });
+
+    Admin.associate = (models) => {
+        Admin.hasMany(models.Doctor);
+        Admin.hasMany(models.Token);
+    };
 
     return Admin;
 };

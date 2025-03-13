@@ -14,9 +14,16 @@ module.exports = (sequelize) => {
         Address: { type: DataTypes.STRING },
         Specialty: { type: DataTypes.STRING },
         CreatedBy: { type: DataTypes.UUID },
-        CreatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        UpdatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        DeletedAt: { type: DataTypes.DATE },
+    },
+    {
+        timestamps: true,
+        paranoid: true,
+        indexes: [
+            {
+                fields: ['Email'],
+                unique: true,
+            }
+        ],
     });
 
     Doctor.associate = (models) => {
