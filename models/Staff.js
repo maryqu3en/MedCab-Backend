@@ -6,31 +6,23 @@ module.exports = (sequelize) => {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
-        },
-        Name: { 
-            type: DataTypes.STRING, 
-            allowNull: false 
-        },
-        Email: { 
-            type: DataTypes.STRING, 
-            unique: true, 
-            allowNull: false 
-        },
-        Password: { 
-            type: DataTypes.STRING, 
-            allowNull: false 
+            references: {
+                model: 'Users',
+                key: 'id',
+            },
         },
         Phone: { 
             type: DataTypes.STRING, 
             allowNull: true 
         },
         Role: { 
-            type: DataTypes.ENUM('nurse', 'receptionist'), 
+            type: DataTypes.ENUM('nurse', 'receptionist'),
             allowNull: false 
         },
     });
 
     Staff.associate = (models) => {
+        Staff.belongsTo(models.User, { foreignKey: 'ID', as: 'User' });
         Staff.belongsTo(models.Doctor, { foreignKey: 'CreatedBy' });
     };
 
