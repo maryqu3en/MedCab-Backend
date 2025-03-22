@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
             primaryKey: true,
             references: {
                 model: 'User',
-                key: 'id',
+                key: 'ID',
             },
         },
         Phone: {
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             references: {
                 model: 'Doctor',
-                key: 'id',
+                key: 'ID',
             },
         },
     },

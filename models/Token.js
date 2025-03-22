@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
     UserID: {
       type: DataTypes.UUID,
       allowNull: true,
+      references: {
+        model: 'User',
+        key: 'ID',
+      },
     },
 
     RefreshToken: {
