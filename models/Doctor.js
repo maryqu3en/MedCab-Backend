@@ -7,24 +7,34 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
             references: {
-                model: 'Users',
+                model: 'User',
                 key: 'id',
             },
         },
-        Phone: { type: DataTypes.STRING },
-        Address: { type: DataTypes.STRING },
-        Specialty: { type: DataTypes.STRING },
-        CreatedBy: { type: DataTypes.UUID },
+        Phone: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        Address: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        Specialty: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        CreatedBy: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'User',
+                key: 'id',
+            },
+        },
     },
         {
             timestamps: true,
             paranoid: true,
-            indexes: [
-                {
-                    fields: ['Email'],
-                    unique: true,
-                }
-            ],
         });
 
     Doctor.associate = (models) => {
