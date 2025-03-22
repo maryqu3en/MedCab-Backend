@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
   User.associate = (models) => {
     User.hasOne(models.Doctor, { foreignKey: 'id', as: 'Doctor' });
     User.hasOne(models.Staff, { foreignKey: 'id', as: 'Staff' });
-    User.hasMany(models.Token, { foreignKey: 'userId', as: 'Tokens' });
+    User.hasMany(models.Token, { foreignKey: 'UserID', as: 'Tokens' });
   };
   return User;
 }
