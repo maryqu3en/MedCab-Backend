@@ -29,8 +29,8 @@ module.exports = (sequelize) => {
 
     Doctor.associate = (models) => {
         Doctor.belongsTo(models.User, { foreignKey: 'ID', as: 'User' });
-        Doctor.belongsTo(models.Admin, { foreignKey: 'CreatedBy', as: 'Creator' });
-        Doctor.hasMany(models.Appointment);
+        Doctor.belongsTo(models.User, { foreignKey: 'CreatedBy', as: 'Creator' });
+        Doctor.hasMany(models.Staff);
     };
 
     return Doctor;
