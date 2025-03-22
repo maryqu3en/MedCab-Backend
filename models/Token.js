@@ -7,14 +7,11 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    DoctorID: {
+    UserID: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
     },
-    AdminID: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
+
     RefreshToken: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,8 +23,7 @@ module.exports = (sequelize) => {
   });
 
   Token.associate = (models) => {
-    Token.belongsTo(models.Admin, { foreignKey: 'AdminID', as: 'Admin' });
-    Token.belongsTo(models.Doctor, { foreignKey: 'DoctorID', as: 'Doctor' });
+    Token.belongsTo(models.User, { foreignKey: 'UserID', as: 'User' });
   }
 
   return Token;
