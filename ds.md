@@ -1,82 +1,88 @@
 nom
-prenom
+prénom
 ddn
-# antecedents
-## anecedent personnels
-- medicaux
-- chirurgicaux
-## antecedents familiaux
-- pere
-- mere
-- frere
-- soeur
-# Histoire de la maladie HDM
-_symptomes_
-- fievre v/f
-- douleurs
-- altertion de l'etat general
-- anorexie 
-- voumissement
-- diarhee 
-- vertige 
 
----
----
+# Antécédents  
+## Antécédents personnels  
+- médicaux  
+- chirurgicaux  
 
-# Examen clinique
-- tensien arterielle 
-- glycemie capillaire
-- oedeme des membres inferieurs v/f
-- bouffisseur du visage v/f
-- poids
-- labstic: +/-
-    - ph 
-    - glucose
-    - sang
-    - proteine
-    - cétone
-- examen cardiovasc (saisie)
-- examen pleuropulmonaire (saisie)
-- examen uronéphrologique (saisie)
-    - contact lombaire +/-
-    - brulure mictionnel +/-
-    - hématuré macroscopique +/-
-- examen neurologique
-    - céphalée +/-
-    - vertige 
-    - vommissement
----
----
-# Examens complémentaires
-## sang
-- numeration formule sanguine (NFS)
-- urée / creatinimie
-- Na+ / k+ (rapport)
-- ca+ / phosphore
-- cholésterole / triglycérides
-- pth (parahormone)
-- glycimie a jeun + hémoglobine glyquée
-- tgo / tgp
-- bilirubine total / directe / indirecte
-- serologie hepatite (B / C / HIV) / syphilis
-- T3 / T4 / TSH (ue)
-- protidemie
-- albuminemie
-- autres
-## urines
-- chimie des urines
-- Examen cytobactériologique des urines UCBU
-- protinurie des 24H
-- autres 
+## Antécédents familiaux  
+- père  
+- mère  
+- frère  
+- sœur  
 
-# Diagnostic
-(saisie) 
+# Histoire de la maladie (HDM)  
+_symptômes_  
+- fièvre v/f  
+- douleurs  
+- altération de l’état général  
+- anorexie  
+- vomissements  
+- diarrhée  
+- vertiges  
 
-# traitements
-## traitements medicales
-(saisie)
+---  
+---  
 
-## traitements supplementaires
-- dialyse peritoneale +/-
-- hémodialyse +/-
-- transplantation reinal +/-
+# Examen clinique  
+- tension artérielle  
+- glycémie capillaire  
+- œdème des membres inférieurs v/f  
+- bouffissure du visage v/f  
+- poids  
+- Labstix : +/-  
+    - pH  
+    - glucose  
+    - sang  
+    - protéines  
+    - cétones  
+- examen cardiovasculaire (saisie)  
+- examen pleuropulmonaire (saisie)  
+- examen uronéphrologique (saisie)  
+    - contact lombaire +/-  
+    - brûlure mictionnelle +/-  
+    - hématurie macroscopique +/-  
+- examen neurologique  
+    - céphalées +/-  
+    - vertiges  
+    - vomissements  
+
+---  
+---  
+
+# Examens complémentaires  
+## Sang  
+- numération formule sanguine (NFS)  
+- urée / créatininémie  
+- Na+ / K+ (rapport)  
+- Ca++ / phosphore  
+- cholestérol / triglycérides  
+- PTH (parathormone)  
+- glycémie à jeun + hémoglobine glyquée  
+- TGO / TGP  
+- bilirubine totale / directe / indirecte  
+- sérologie hépatite (B / C / VIH) / syphilis  
+- T3 / T4 / TSH  
+- protidémie  
+- albuminémie  
+- autres  
+
+## Urines  
+- chimie des urines  
+- examen cytobactériologique des urines (ECBU)  
+- protéinurie des 24h  
+- autres  
+
+# Diagnostic  
+(saisie)  
+
+# Traitements  
+## Traitements médicaux  
+(saisie)  
+
+## Traitements supplémentaires  
+- dialyse péritonéale +/-  
+- hémodialyse +/-  
+- transplantation rénale +/-  

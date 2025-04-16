@@ -16,7 +16,7 @@
 }
 
 /* General Reset */
-body, h1, h2, p, ul, li, a, button {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -110,9 +110,9 @@ body {
 }
 
 .right-section ul li {
-  font-size: 1.2rem; /* Increased font size for list items */
-  line-height: 1.6; /* Improved readability */
-  margin: 0.7rem 0; /* Added more spacing between items */
+  font-size: 1.2rem;
+  line-height: 1.6; 
+  margin: 0.7rem 0; 
   color: var(--secondary-color);
   display: flex;
   align-items: center;
@@ -125,9 +125,9 @@ body {
 }
 
 .right-section button {
-  font-size: 1.2rem; /* Increased button text size */
-  font-weight: 700; /* Made the font bolder */
-  padding: 1rem 2rem; /* Increased padding for larger buttons */
+  font-size: 1.2rem;
+  font-weight: 700; 
+  padding: 1rem 2rem;
   background: var(--button-bg);
   color: var(--button-text-color);
   border: none;
