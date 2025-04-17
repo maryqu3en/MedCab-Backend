@@ -29,7 +29,7 @@ const uiOptions = {
   customCss: `
     .swagger-ui .topbar { display: none; }
     .swagger-ui .info h1 { 
-      color: #4CAF50; 
+      color:rgb(112, 76, 175); 
       font-family: 'Arial', sans-serif; 
       font-size: 2.5rem; 
       text-align: center; 
@@ -42,17 +42,17 @@ const uiOptions = {
       margin-bottom: 2rem; 
     }
     .swagger-ui .btn { 
-      background-color: #6200ea; 
+      background-color:rgb(110, 63, 176); 
       color: #fff; 
       border-radius: 8px; 
       padding: 0.5rem 1rem; 
       font-size: 1rem; 
     }
     .swagger-ui .btn:hover { 
-      background-color: #3700b3; 
+      background-color:rgb(163, 103, 230); 
     }
     .swagger-ui .scheme-container { 
-      background-color: #f4f4f4; 
+      background-color:rgb(244, 244, 244); 
       padding: 1rem; 
       border-radius: 8px; 
       margin-bottom: 2rem; 

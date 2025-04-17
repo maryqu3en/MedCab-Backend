@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
         key: 'ID',
       },
     },
-
     RefreshToken: {
       type: DataTypes.STRING,
       allowNull: false,

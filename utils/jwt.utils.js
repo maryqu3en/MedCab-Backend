@@ -2,21 +2,23 @@ const jwt = require('jsonwebtoken');
 const Token = require('../models/Token');
 const secret = process.env.JWT_SECRET;
 
-const generateToken = async (user, userType) => {
+const tokenExpiryDays = 10;
+
+
+const generateToken = async (user) => {
     const payload = {
         id: user.ID,
         email: user.Email,
-        type: userType,
+        type: user.UserType,
     };
 
-    const token = jwt.sign(payload, secret, { expiresIn: '10d' });
-    const expiresAt = new Date(Date.now() + 10 * 24 * 3600 * 1000);
+    const token = jwt.sign(payload, secret, { expiresIn: `${tokenExpiryDays}d` });
+    const expiresAt = new Date(Date.now() + tokenExpiryDays * 24 * 3600 * 1000);
 
     await Token.create({
         RefreshToken: token,
         ExpiresAt: expiresAt,
-        AdminID: userType === 'Admin' ? user.ID : null,
-        DoctorID: userType === 'Doctor' ? user.ID : null,
+        UserID: user.ID,
     });
 
     return token;
