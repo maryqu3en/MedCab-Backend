@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/mongodb');
-const { testPGConnection } = require('./config/postgres');
+const { testPGConnection, sequelize } = require('./config/postgres');
 const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
@@ -39,6 +39,15 @@ app.use(errorHandler);
 
 connectDB();
 testPGConnection();
+
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Database synced ✨');
+  })
+  .catch((error) => {
+    console.error('Error syncing database:', error);
+  }
+  );
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

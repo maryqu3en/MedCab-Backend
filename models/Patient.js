@@ -2,27 +2,22 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const Patient = sequelize.define('Patient', {
-        ID: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        Name: { type: DataTypes.STRING, allowNull: false },
-        BirthDate: { type: DataTypes.DATE },
-        Gender: { type: DataTypes.ENUM('male', 'female'), allowNull: false },
-        Phone: { type: DataTypes.STRING },
-        Email: { type: DataTypes.STRING, unique: true },
-        Address: { type: DataTypes.STRING },
-        EmergencyContact: { type: DataTypes.STRING },
-        CreatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        UpdatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        DeletedAt: { type: DataTypes.DATE },
+        name: { type: DataTypes.STRING, allowNull: false },
+        birth_date: { type: DataTypes.DATE },
+        gender: { type: DataTypes.ENUM('male', 'female'), allowNull: false },
+        phone: { type: DataTypes.STRING },
+        email: { type: DataTypes.STRING, unique: true },
+        address: { type: DataTypes.STRING },
+        emergency_contact: { type: DataTypes.STRING },
+        created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        deleted_at: { type: DataTypes.DATE },
     });
-
-    Patient.associate = (models) => {
-        Patient.hasMany(models.Appointment);
-        Patient.hasMany(models.Billing);
-    };
 
     return Patient;
 };

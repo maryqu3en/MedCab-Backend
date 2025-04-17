@@ -4,7 +4,7 @@ console.log(sequelize instanceof require('sequelize').Sequelize);
 
 (async () => {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ alter: true });
         console.log('Database synchronized successfully.');
         process.exit(0);
     } catch (err) {

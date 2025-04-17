@@ -1,35 +1,37 @@
-const { DataTypes } = require('sequelize');
-
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    ID: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    Name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Email: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    Password: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    UserType: {
+    user_type: {
       type: DataTypes.ENUM('doctor', 'staff', 'admin'),
       allowNull: false,
     },
+  }, {
+    tableName: 'Users',
+    timestamps: true,
+    paranoid: true,
   });
 
   User.associate = (models) => {
-    User.hasOne(models.Doctor, { foreignKey: 'ID', as: 'Doctor' });
-    User.hasOne(models.Staff, { foreignKey: 'ID', as: 'Staff' });
-    User.hasMany(models.Token, { foreignKey: 'UserID', as: 'Tokens' });
+    User.hasOne(models.Doctor, { foreignKey: 'id', as: 'Doctor' });
+    User.hasOne(models.Staff, { foreignKey: 'id', as: 'Staff' });
+    User.hasMany(models.Token, { foreignKey: 'user_id', as: 'Tokens' });
   };
   return User;
 }

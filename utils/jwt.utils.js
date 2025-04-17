@@ -7,18 +7,18 @@ const tokenExpiryDays = 10;
 
 const generateToken = async (user) => {
     const payload = {
-        id: user.ID,
-        email: user.Email,
-        type: user.UserType,
+        id: user.id,
+        email: user.email,
+        type: user.usertype,
     };
 
     const token = jwt.sign(payload, secret, { expiresIn: `${tokenExpiryDays}d` });
-    const expiresAt = new Date(Date.now() + tokenExpiryDays * 24 * 3600 * 1000);
+    const expires_at = new Date(Date.now() + tokenExpiryDays * 24 * 3600 * 1000);
 
     await Token.create({
-        RefreshToken: token,
-        ExpiresAt: expiresAt,
-        UserID: user.ID,
+        refresh_token: token,
+        expires_at: expires_at,
+        user_id: user.id,
     });
 
     return token;
@@ -33,7 +33,7 @@ const verifyToken = (token) => {
 };
 
 const deleteToken = async (token) => {
-    await Token.destroy({ where: { RefreshToken: token } });
+    await Token.destroy({ where: { refresh_token: token } });
 };
 
 module.exports = { generateToken, verifyToken, deleteToken };

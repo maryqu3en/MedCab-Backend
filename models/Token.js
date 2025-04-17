@@ -2,12 +2,12 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   const Token = sequelize.define('Token', {
-    ID: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    UserID: {
+    user_id: {
       type: DataTypes.UUID,
       allowNull: true,
       references: {
@@ -15,18 +15,18 @@ module.exports = (sequelize) => {
         key: 'ID',
       },
     },
-    RefreshToken: {
+    refresh_token: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ExpiresAt: {
+    expires_at: {
       type: DataTypes.DATE,
       allowNull: false,
     },
   });
 
   Token.associate = (models) => {
-    Token.belongsTo(models.User, { foreignKey: 'UserID', as: 'User' });
+    Token.belongsTo(models.User, { foreignKey: 'user_id', as: 'User' });
   }
 
   return Token;

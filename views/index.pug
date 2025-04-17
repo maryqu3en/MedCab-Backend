@@ -1,5 +1,5 @@
 doctype html
-html
+html(lang="en")
   head
     title MedCab APIs - A Clinic Management System
     meta(charset="UTF-8")
@@ -7,34 +7,29 @@ html
     link(rel="stylesheet", href="/styles/index.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap")
   body
-    nav.navbar
-      h1.nav-title Clinic Management System
-      div.nav-actions
-        button(onclick="navigateToDocs()") View API Docs
-        a(href="mailto:devs@example.com") Contact Developers
+    .wrapper
+      nav.navbar
+        h1.nav-title Clinic Management System
+        .nav-actions
+          button.btn(onclick="navigateToDocs()") View API Docs
+          a.btn-link(href="mailto:devs@example.com") Contact Developers
 
-    main.main-content
-      div.card.left-section
-        img(src="/images/clinic.jpg", alt="Clinic Image")
-      
-      div.card.right-section
-        h2 Key Features
-        ul
-          li
-            span 
-            | Secure and fast API endpoints
-          li
-            span 
-            | Easy integration for clinic workflows
-          li
-            span 
-            | Comprehensive documentation
-        button(onclick="navigateToDocs()") View API Docs
+      main.main-content
+        section.card.left-section
+          img(src="/images/clinic.jpg", alt="Clinic Image")
 
-    footer.footer
-      p © 2024 MedCab APIs. All rights reserved.
-      div.footer-actions
-        button(onclick="navigateToDocs()") View API Docs
-        a(href="mailto:devs@example.com") Contact Developers
+        section.card.right-section
+          h2.section-title Key Features
+          ul.feature-list
+            li Secure and fast API endpoints
+            li Easy integration for clinic workflows
+            li Comprehensive documentation
+          button.btn(onclick="navigateToDocs()") View API Docs
+
+      footer.footer
+        p.footer-text © 2024 MedCab APIs. All rights reserved.
+        .footer-actions
+          button.btn(onclick="navigateToDocs()") View API Docs
+          a.btn-link(href="mailto:devs@example.com") Contact Developers
 
     script(src="/scripts/script.js")

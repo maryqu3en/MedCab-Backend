@@ -2,44 +2,44 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const Staff = sequelize.define('Staff', {
-        ID: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
             references: {
                 model: 'User',
-                key: 'ID',
+                key: 'id',
             },
         },
-        Phone: {
+        phone: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
-        Role: {
+        role: {
             type: DataTypes.ENUM('nurse', 'receptionist'),
-            allowNull: false
+            allowNull: false,
         },
-        CreatedBy: {
+        created_by: {
             type: DataTypes.UUID,
             allowNull: true,
             references: {
                 model: 'Doctor',
-                key: 'ID',
+                key: 'id',
             },
         },
-        Status: {
-            type: DataTypes.ENUM('Pending', 'Active', 'Inactive'),
-            defaultValue: 'Pending',
+        status: {
+            type: DataTypes.ENUM('pending', 'active', 'inactive'),
+            defaultValue: 'pending',
         },
     },
-        {
-            timestamps: true,
-            paranoid: true,
-        });
+    {
+        timestamps: true,
+        paranoid: true,
+    });
 
     Staff.associate = (models) => {
-        Staff.belongsTo(models.User, { foreignKey: 'ID', as: 'User' });
-        Staff.belongsTo(models.Doctor, { foreignKey: 'CreatedBy', as: 'Creator' });
+        Staff.belongsTo(models.User, { foreignKey: 'id', as: 'User' });
+        Staff.belongsTo(models.Doctor, { foreignKey: 'created_by', as: 'Creator' });
     };
 
     return Staff;
