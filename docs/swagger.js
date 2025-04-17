@@ -7,7 +7,7 @@ const options = {
     info: {
       title: "MedCab API",
       version: "1.0.0",
-      description: "API documentation for the MedCab backend",
+      description: "🚑 MedCab – Empowering Medical Communication.\n\nExplore all endpoints used in the backend.",
     },
     servers: [
       {
@@ -16,7 +16,7 @@ const options = {
       },
       {
         url: "https://medcab-backend.onrender.com/",
-        description: "Developemnet server",
+        description: "Development server",
       },
     ],
   },
@@ -25,62 +25,103 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-const uiOptions = {
-  customCss: `
-    .swagger-ui .topbar { display: none; }
-    .swagger-ui .info h1 { 
-      color:rgb(112, 76, 175); 
-      font-family: 'Arial', sans-serif; 
-      font-size: 2.5rem; 
-      text-align: center; 
-      margin-bottom: 1rem; 
-    }
-    .swagger-ui .info p { 
-      font-family: 'Arial', sans-serif; 
-      font-size: 1.2rem; 
-      text-align: center; 
-      margin-bottom: 2rem; 
-    }
-    .swagger-ui .btn { 
-      background-color:rgb(110, 63, 176); 
-      color: #fff; 
-      border-radius: 8px; 
-      padding: 0.5rem 1rem; 
-      font-size: 1rem; 
-    }
-    .swagger-ui .btn:hover { 
-      background-color:rgb(163, 103, 230); 
-    }
-    .swagger-ui .scheme-container { 
-      background-color:rgb(244, 244, 244); 
-      padding: 1rem; 
-      border-radius: 8px; 
-      margin-bottom: 2rem; 
-    }
-    .swagger-ui .opblock-summary { 
-      background-color: #e0e0e0; 
-      border-radius: 8px; 
-      margin-bottom: 1rem; 
-    }
-    .swagger-ui .opblock-summary:hover { 
-      background-color: #d0d0d0; 
-    }
-    .swagger-ui .opblock-summary-method { 
-      border-radius: 8px 0 0 8px; 
-    }
-    .swagger-ui .opblock-summary-description { 
-      font-size: 1.1rem; 
-    }
-    .swagger-ui .opblock-body pre { 
-      background-color: #f4f4f4; 
-      padding: 1rem; 
-      border-radius: 8px; 
-    }
-  `,
-  customSiteTitle: "MedCab API Docs",
-  // customfavIcon: "https://example.com/favicon.ico", // Replace with your favicon URL
+// your favorite palette:
+const palette = {
+  primary: "#64537d",        // smoky
+  secondary: "#736c8a",      // rum
+  accent: "#5c747a",         // nevada
+  background: "#ebebeb",     // gallery
+  text: "#3a3f50",           // bright-gray
 };
 
-module.exports = uiOptions;
+const uiOptions = {
+  customCss: `
+    body {
+      background-color: ${palette.background};
+    }
+
+    .swagger-ui .topbar { 
+      display: none; 
+    }
+
+    .swagger-ui .info h1 { 
+      color: ${palette.primary}; 
+      font-family: 'Segoe UI', sans-serif; 
+      font-size: 2.75rem; 
+      text-align: center; 
+      margin-bottom: 1rem; 
+    }
+
+    .swagger-ui .info p { 
+      font-family: 'Segoe UI', sans-serif; 
+      font-size: 1.15rem; 
+      color: ${palette.text}; 
+      text-align: center; 
+      margin-bottom: 2rem; 
+    }
+
+    .swagger-ui .btn {
+      background-color: ${palette.primary}; 
+      color: #fff; 
+      border-radius: 8px; 
+      padding: 0.5rem 1.2rem; 
+      font-size: 1rem; 
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .swagger-ui .btn:hover {
+      background-color: ${palette.secondary}; 
+    }
+
+    .swagger-ui .scheme-container {
+      background-color: #fff; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .swagger-ui .opblock-summary {
+      background-color: #f4f4f4; 
+      border-radius: 10px; 
+      margin-bottom: 1rem; 
+    }
+
+    .swagger-ui .opblock-summary:hover {
+      background-color: #e6e6e6;
+    }
+
+    .swagger-ui .opblock-summary-method {
+      border-radius: 10px 0 0 10px;
+      font-weight: bold;
+    }
+
+    .swagger-ui .opblock-summary-description {
+      font-size: 1.05rem;
+    }
+
+    .swagger-ui .opblock-body pre {
+      background-color: #f9f9f9;
+      padding: 1rem; 
+      border-radius: 10px;
+      color: ${palette.text};
+    }
+
+    .swagger-ui .opblock-tag {
+      font-size: 1.2rem;
+      color: ${palette.accent};
+      font-weight: bold;
+    }
+
+    .swagger-ui .models {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  `,
+  customSiteTitle: "🌿 MedCab API Docs",
+  // customfavIcon: "https://your-cool-favicon.url", // Optional
+};
 
 module.exports = { swaggerUi, specs, uiOptions };
