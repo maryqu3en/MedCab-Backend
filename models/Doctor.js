@@ -21,12 +21,16 @@ module.exports = (sequelize) => {
         },
         CreatedBy: {
             type: DataTypes.UUID,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'User',
                 key: 'ID',
             },
         },
+        Status: {
+            type: DataTypes.ENUM('Pending', 'Active', 'Inactive'),
+            defaultValue: 'Pending',
+          },
     },
         {
             timestamps: true,
