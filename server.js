@@ -9,6 +9,7 @@ const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 
+const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
 
 
@@ -29,12 +30,9 @@ app.get('/', (req, res) => {
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy', timestamp: new Date() });
-});
+app.use('/health', healthRoutes);
 
 app.use('/api/users', userRoutes);
-
 
 app.use(notFound);
 app.use(errorHandler);
