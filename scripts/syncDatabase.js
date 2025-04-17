@@ -1,6 +1,5 @@
 const { sequelize } = require('../config/postgres');
 
-
 console.log(sequelize instanceof require('sequelize').Sequelize); 
 
 (async () => {
