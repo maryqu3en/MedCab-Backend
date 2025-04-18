@@ -9,7 +9,7 @@ const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 
 const healthRoutes = require('./routes/health.routes');
-
+const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
@@ -24,7 +24,11 @@ app.use(logger);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 app.use('/health', healthRoutes);
+app.use('/api/user', userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
