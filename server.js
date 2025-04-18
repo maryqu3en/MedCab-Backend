@@ -1,16 +1,14 @@
 const express = require('express');
-const path = require('path');
 // const initializeSocket = require('./config/socket.config');
 const cors = require('cors');
 require('dotenv').config();
 const connectDB = require('./config/mongodb');
-const { testPGConnection, sequelize } = require('./config/postgres');
+const prisma = require('./config/prisma');
 const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 
 const healthRoutes = require('./routes/health.routes');
-const userRoutes = require('./routes/user.routes');
 
 
 const app = express();
@@ -20,34 +18,15 @@ app.use(cors());
 
 app.use(logger);
 
-app.set("view engine", "pug");
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
 app.use('/health', healthRoutes);
 
-app.use('/api/users', userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
 
 connectDB();
-testPGConnection();
-
-sequelize.sync({ alter: true })
-  .then(() => {
-    console.log('Database synced ✨');
-  })
-  .catch((error) => {
-    console.error('Error syncing database:', error);
-  }
-  );
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
