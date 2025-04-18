@@ -12,12 +12,17 @@
   },
   "author": "Meriem SOUBIH",
   "license": "ISC",
-  "description": "Backend for MedCab, a telemedicine platform connecting patients with doctors.",
+  "description": "Backend for MedCab, a web-based clinic management system.",
   "keywords": [
     "telemedicine",
     "healthcare",
     "api",
-    "medcab"
+    "medcab",
+    "clinic",
+    "management",
+    "system",
+    "backend",
+    "CMS"
   ],
   "dependencies": {
     "@prisma/client": "^6.6.0",
