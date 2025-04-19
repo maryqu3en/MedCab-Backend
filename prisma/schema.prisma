@@ -9,49 +9,49 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
   user_type UserType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime? @db.Timestamp(6)
 
-  Doctor    Doctor?  @relation("UserDoctor")
-  Staff     Staff?   @relation("UserStaff")
-  Tokens    Token[]  @relation("UserTokens")
-  CreatedDoctors Doctor[] @relation("CreatedDoctors") // for created_by
-  Logs      Log[]    @relation("UserLogs")
+  Doctor         Doctor?  @relation("UserDoctor")
+  Staff          Staff?   @relation("UserStaff")
+  Tokens         Token[]  @relation("UserTokens")
+  CreatedDoctors Doctor[] @relation("CreatedDoctors")
+  CreatedStaff   Staff[]  @relation("CreatedStaff")
+  Logs           Log[]    @relation("UserLogs")
 }
 
 model Doctor {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   phone      String
   specialty  String
-  created_by String? 
-  status     Status   @default(pending)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  created_by String?
+  status     Status    @default(pending)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? @db.Timestamp(6)
 
-  User     User     @relation("UserDoctor", fields: [id], references: [id])
-  Creator  User?    @relation("CreatedDoctors", fields: [created_by], references: [id])
-  Staff    Staff[]
+  User    User  @relation("UserDoctor", fields: [id], references: [id])
+  Creator User? @relation("CreatedDoctors", fields: [created_by], references: [id])
 }
 
 model Staff {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   phone      String?
   role       StaffRole
   created_by String?
-  status     Status   @default(pending)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  status     Status    @default(pending)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? @db.Timestamp(6)
 
-  User    User   @relation("UserStaff", fields: [id], references: [id])
-  Creator Doctor? @relation(fields: [created_by], references: [id])
+  User    User  @relation("UserStaff", fields: [id], references: [id])
+  Creator User? @relation("CreatedStaff", fields: [created_by], references: [id])
 }
 
 model Token {
@@ -64,29 +64,29 @@ model Token {
 }
 
 model Patient {
-  id                String   @id @default(uuid())
+  id                String    @id @default(uuid())
   name              String
   birth_date        DateTime?
   gender            Gender
   phone             String?
-  email             String? @unique
+  email             String?   @unique
   address           String?
   emergency_contact String?
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
   deleted_at        DateTime?
 }
 
 model Log {
-  id           String   @id @default(uuid())
+  id           String         @id @default(uuid())
   user_id      String?
   action       LogAction
   target_table LogTargetTable
   target_id    LogTargetId
   details      String?
-  created_at   DateTime @default(now())
+  created_at   DateTime       @default(now())
 
-  User         User?    @relation("UserLogs", fields: [user_id], references: [id])
+  User User? @relation("UserLogs", fields: [user_id], references: [id])
 }
 
 enum Gender {
@@ -116,6 +116,7 @@ enum LogAction {
   UPDATE
   DELETE
 }
+
 enum LogTargetTable {
   User
   Doctor
@@ -123,6 +124,7 @@ enum LogTargetTable {
   Token
   Patient
 }
+
 enum LogTargetId {
   id
   user_id
