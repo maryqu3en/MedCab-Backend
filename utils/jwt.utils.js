@@ -5,7 +5,7 @@ const prisma = require('../config/prisma');
 const secret = process.env.JWT_SECRET;
 const tokenExpiryDays = 10;
 
-const generateToken = async (user) => {
+exports.generateToken = async (user) => {
   const payload = {
     id: user.id,
     email: user.email,
@@ -28,7 +28,7 @@ const generateToken = async (user) => {
   return token;
 };
 
-const verifyToken = (token) => {
+exports.verifyToken = (token) => {
   try {
     return jwt.verify(token, secret);
   } catch (error) {
@@ -36,14 +36,24 @@ const verifyToken = (token) => {
   }
 };
 
-const deleteToken = async (token) => {
+exports.deleteToken = async (token) => {
   await prisma.token.deleteMany({
     where: { refresh_token: token },
   });
 };
 
-module.exports = {
-  generateToken,
-  verifyToken,
-  deleteToken,
+exports.decodeToken = (token) => {
+  try {
+    return jwt.decode(token);
+  } catch (error) {
+    return null;
+  }
+};
+
+exports.getTokenFromHeader = (req) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return null;
+
+  const token = authHeader.split(' ')[1];
+  return token || null;
 };
