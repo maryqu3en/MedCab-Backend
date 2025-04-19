@@ -3,9 +3,10 @@ const router = express.Router();
 const userController = require('../controllers/user.controller');
 const authenticate = require('../middleware/auth.middleware');
 const authorize = require('../middleware/authorize.middleware');
+const fieldValidator = require('../middleware/validateFields');
 
-router.post('/register', userController.register);
-router.post('/login', userController.login);
+router.post('/register', fieldValidator.registerRules, userController.register);
+router.post('/login', fieldValidator.loginRules, userController.login);
 
 router.post('/logout', authenticate, userController.logout);
 router.get('/profile', authenticate, userController.getProfile);
