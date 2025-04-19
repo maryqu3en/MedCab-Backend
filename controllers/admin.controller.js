@@ -1,21 +1,10 @@
-const { updateDoctorStatus, updateStaffStatus } = require('.../models/admin.model');
-const { getTokenFromHeader, decodeToken } = require('../utils/jwt.utils');
+const { updateDoctorStatus, updateStaffStatus } = require('../models/admin.model');
 
 exports.updateUserStatus = async (req, res) => {
     const { id } = req.params;
     const { status, usertype } = req.body;
 
-    const token = getTokenFromHeader(req);
-    if (!token) {
-        return res.status(401).json({ message: 'Authorization token is missing' });
-    }
-
-    const decoded = decodeToken(token);
-    if (!decoded) {
-        return res.status(401).json({ message: 'Invalid or expired token' });
-    }
-
-    const adminId = decoded.id;
+    const adminId = req.user.id;
 
     const validStatuses = ['pending', 'active', 'inactive'];
     if (!validStatuses.includes(status)) {

@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "db:generate": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev --name init",
-    "db:reset": "npx prisma migrate reset"
+    "db:reset": "npx prisma migrate reset",
+    "db:studio": "npx prisma studio"
   },
   "author": "Meriem SOUBIH",
   "license": "ISC",

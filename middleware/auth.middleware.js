@@ -1,15 +1,12 @@
-const { verifyToken } = require('../utils/jwt.utils');
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { verifyToken, getTokenFromHeader } = require('../utils/jwt.utils');
+const prisma = require('../config/prisma');
 
 const auth = async (req, res, next) => {
-  const authHeader = req.header('Authorization');
+  const token = getTokenFromHeader(req);
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'No or invalid token format' });
+  if (!token) {
+    return res.status(401).json({ error: 'Authorization token is missing or invalid' });
   }
-
-  const token = authHeader.replace('Bearer ', '');
 
   try {
     const decoded = verifyToken(token);

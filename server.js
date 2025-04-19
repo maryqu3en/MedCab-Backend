@@ -10,6 +10,7 @@ const { errorHandler, notFound } = require('./middleware/error.middleware');
 
 const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 const app = express();
 
@@ -29,11 +30,12 @@ app.get('/', (req, res) => {
 });
 app.use('/health', healthRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
 
-connectDB();
+// connectDB();
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

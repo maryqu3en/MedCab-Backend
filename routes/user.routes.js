@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
 const authenticate = require('../middleware/auth.middleware');
 const authorize = require('../middleware/authorize.middleware');
 const fieldValidator = require('../middleware/validateFields');
+const userController = require('../controllers/user.controller');
 
 router.post('/register', fieldValidator.registerRules, userController.register);
 router.post('/login', fieldValidator.loginRules, userController.login);
