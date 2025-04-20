@@ -1,4 +1,4 @@
-const { updateDoctorStatus, updateStaffStatus } = require('../models/admin.model');
+const { updateDoctorStatus, updateStaffStatus, getDashboardData } = require('../models/admin.model');
 
 exports.updateUserStatus = async (req, res) => {
     const { id } = req.params;
@@ -31,4 +31,13 @@ exports.updateUserStatus = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Failed to update status', error: err.message });
     }
+};
+
+exports.getAdminDashboard = async (req, res) => {
+  try {
+    const dashboard = await getDashboardData();
+    res.status(200).json(dashboard);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch dashboard data", error: err.message });
+  }
 };
