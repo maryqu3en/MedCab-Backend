@@ -17,3 +17,17 @@ exports.updateStaffStatus = async (id, status, adminId) => {
 
     return updated.count > 0;
 };
+
+exports.getDashboardData = async () => {
+    const totalDoctors = await prisma.doctor.count();
+    const totalStaff = await prisma.staff.count();
+    const totalPatients = await prisma.patient.count();
+    const totalAppointments = await prisma.appointment.count();
+
+    return {
+        totalDoctors,
+        totalStaff,
+        totalPatients,
+        totalAppointments
+    };
+}
