@@ -107,7 +107,12 @@ _symptômes_
 - protéinurie des 24h  
 - autres  
 
-# Diagnostic  
+
+
+---
+---
+
+# Diagnostic
 (saisie)  
 
 # Traitements  
