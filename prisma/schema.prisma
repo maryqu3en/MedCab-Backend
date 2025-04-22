@@ -64,17 +64,15 @@ model Token {
 }
 
 model Patient {
-  id                String    @id @default(uuid())
-  name              String
-  birth_date        DateTime?
-  gender            Gender
-  phone             String?
-  email             String?   @unique
-  address           String?
-  emergency_contact String?
-  created_at        DateTime  @default(now())
-  updated_at        DateTime  @updatedAt
-  deleted_at        DateTime?
+  id         String    @id @default(uuid())
+  name       String
+  birth_date DateTime?
+  gender     Gender
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+
+  MedicalRecords MedicalRecord[] @relation("PatientMedicalRecords")
 }
 
 model Log {
@@ -87,6 +85,43 @@ model Log {
   created_at   DateTime       @default(now())
 
   User User? @relation("UserLogs", fields: [user_id], references: [id])
+}
+
+model MedicalRecord {
+  id            String                @id @default(uuid())
+  patientId     String
+  createdBy     String // doctor
+  consultations ConsultationSession[] @relation("MedicalRecordConsultations")
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  Patient Patient? @relation("PatientMedicalRecords", fields: [patientId], references: [id])
+}
+
+model ConsultationSession {
+  id                    String              @id @default(uuid())
+  medicalRecordId       String
+  antecedentsPersonnels Json?
+  antecedentsFamiliaux  Json?
+  hdmSymptoms           Json?
+  clinicalExam          Json?
+  diagnosis             String?
+  treatments            String?
+  complementaryExams    ComplementaryExam[] @relation("ConsultationComplementaryExams")
+  createdAt             DateTime            @default(now())
+
+  MedicalRecord MedicalRecord @relation("MedicalRecordConsultations", fields: [medicalRecordId], references: [id])
+}
+
+model ComplementaryExam {
+  id                    String   @id @default(uuid())
+  consultationSessionId String
+  type                  String // "sang", "urine", etc
+  exam                  String
+  result                Json?
+  createdAt             DateTime @default(now())
+
+  ConsultationSession ConsultationSession @relation("ConsultationComplementaryExams", fields: [consultationSessionId], references: [id])
 }
 
 enum Gender {
