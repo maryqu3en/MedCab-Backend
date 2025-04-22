@@ -12,6 +12,7 @@ const XLSX = require('xlsx');
 const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
 const adminRoutes = require('./routes/admin.routes');
+const patientRoutes = require('./routes/patient.routes');
 
 const app = express();
 
@@ -20,12 +21,6 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
-
-if (process.env.NODE_ENV === 'development') {
-  process.env.DATABASE_URL = process.env.DEV_DATABASE_URL;
-} else {
-  process.env.DATABASE_URL = process.env.PROD_DATABASE_URL;
-}
 
 app.use(logger);
 
@@ -38,6 +33,7 @@ app.get('/', (req, res) => {
 app.use('/health', healthRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/patient', patientRoutes);
 
 app.get('/api/medicines', (req, res) => {
   const filePath = path.join(__dirname, 'medicines.xlsx');
@@ -61,5 +57,4 @@ const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
 });
-
 // initializeSocket(server);
