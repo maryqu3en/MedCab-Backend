@@ -21,6 +21,12 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
+if (process.env.NODE_ENV === 'development') {
+  process.env.DATABASE_URL = process.env.DEV_DATABASE_URL;
+} else {
+  process.env.DATABASE_URL = process.env.PROD_DATABASE_URL;
+}
+
 app.use(logger);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
