@@ -49,6 +49,7 @@ app.get('/api/medicines', (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
+
 // connectDB();
 
 const PORT = process.env.PORT || 3000;
