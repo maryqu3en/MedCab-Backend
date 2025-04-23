@@ -2,17 +2,21 @@ const { createPatient, getPatientById, updatePatient, deletePatient, getPatientR
 
 exports.createPatient = async (req, res) => {
   const { name, birth_date, gender } = req.body;
-
+  const doctorId = req.user.id;
+  
   if (!birth_date || isNaN(new Date(birth_date).getTime())) {
     return res.status(400).json({ message: 'Invalid birth_date format' });
   }
 
   try {
-    const patient = await createPatient({
-      name,
-      birth_date: new Date(birth_date), // Convert to Date object
-      gender,
-    });
+    const patient = await createPatient(
+      {
+        name,
+        birth_date: new Date(birth_date),
+        gender,
+      },
+      doctorId 
+    );
     res.status(201).json(patient);
   } catch (error) {
     console.error('Error creating patient:', error);
@@ -40,7 +44,11 @@ exports.updatePatient = async (req, res) => {
   const { name, birth_date, gender } = req.body;
 
   try {
-    const updatedPatient = await updatePatient(id, { name, birth_date, gender });
+    const updatedPatient = await updatePatient(id, {
+      name,
+      birth_date: birth_date ? new Date(birth_date) : undefined, // Convert to Date object if provided
+      gender,
+    });
     if (!updatedPatient) {
       return res.status(404).json({ message: 'Patient not found' });
     }
@@ -71,7 +79,7 @@ exports.getPatientRecords = async (req, res) => {
 
   try {
     const records = await getPatientRecords(id);
-    if (!records) {
+    if (!records || records.length === 0) {
       return res.status(404).json({ message: 'No records found for this patient' });
     }
     res.status(200).json(records);

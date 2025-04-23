@@ -36,8 +36,9 @@ model Doctor {
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? @db.Timestamp(6)
 
-  User    User  @relation("UserDoctor", fields: [id], references: [id])
-  Creator User? @relation("CreatedDoctors", fields: [created_by], references: [id])
+  User           User            @relation("UserDoctor", fields: [id], references: [id])
+  Creator        User?           @relation("CreatedDoctors", fields: [created_by], references: [id])
+  MedicalRecords MedicalRecord[] @relation("DoctorMedicalRecords") // New relation
 }
 
 model Staff {
@@ -89,13 +90,14 @@ model Log {
 
 model MedicalRecord {
   id            String                @id @default(uuid())
-  patientId     String
-  createdBy     String // doctor
+  patient_id    String
+  created_by    String
   consultations ConsultationSession[] @relation("MedicalRecordConsultations")
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt
 
-  Patient Patient? @relation("PatientMedicalRecords", fields: [patientId], references: [id])
+  Doctor  Doctor?  @relation("DoctorMedicalRecords", fields: [created_by], references: [id])
+  Patient Patient? @relation("PatientMedicalRecords", fields: [patient_id], references: [id])
 }
 
 model ConsultationSession {

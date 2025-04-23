@@ -26,8 +26,12 @@ app.use(logger);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, uiOptions));
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
+app.get('/', (req, res, next) => {
+  try {
+    res.send('API is running...');
+  } catch (error) {
+    next(error); // Pass the error to the errorHandler middleware
+  }
 });
 
 app.use('/health', healthRoutes);

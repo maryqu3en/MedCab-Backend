@@ -124,3 +124,8 @@ _symptômes_
 - hémodialyse +/-  
 - transplantation rénale +/-  
  
+
+ ---
+ ---
+
+ 
