@@ -7,5 +7,5 @@ const adminController = require('../controllers/admin.controller');
 
 
 router.patch("/users/status/:id", authenticate, authorize("admin"), adminController.updateUserStatus);
-router.get("/dashboard", authorize("admin"), adminController.getAdminDashboard);
+router.get("/dashboard",authenticate, authorize("admin"), adminController.getAdminDashboard);
 module.exports = router;
