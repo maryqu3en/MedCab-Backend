@@ -9,7 +9,7 @@ exports.registerRules = [
     check("usertype")
         .notEmpty()
         .withMessage("Usertype is required")
-        .isIn(["doctor", "satff", "admin"])
+        .isIn(["doctor", "staff", "admin"])
         .withMessage("Usertype must be either doctor, staff or admin"),
 
     body("specialty").if(body("usertype").equals("doctor"))

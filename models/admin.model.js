@@ -24,10 +24,27 @@ exports.getDashboardData = async () => {
     const totalPatients = await prisma.patient.count();
     const totalAppointments = await prisma.appointment.count();
 
+    const doctors = await prisma.doctor.findMany({
+        include: {
+            User: true, // Include related user data if needed
+        },
+    });
+
+    const staff = await prisma.staff.findMany({
+        include: {
+            User: true, // Include related user data if needed
+        },
+    });
+
+    const patients = await prisma.patient.findMany();
+
     return {
         totalDoctors,
         totalStaff,
         totalPatients,
-        totalAppointments
+        totalAppointments,
+        doctors,
+        staff,
+        patients
     };
-}
+};
