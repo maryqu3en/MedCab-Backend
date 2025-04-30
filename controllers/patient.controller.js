@@ -1,4 +1,4 @@
-const { createPatient, getPatientById, updatePatient, deletePatient, getPatientRecords } = require('../models/patient.model');
+const { getAllPatients, createPatient, getPatientById, updatePatient, deletePatient, getPatientRecords } = require('../models/patient.model');
 
 exports.createPatient = async (req, res) => {
   const { name, birth_date, gender } = req.body;
@@ -21,6 +21,19 @@ exports.createPatient = async (req, res) => {
   } catch (error) {
     console.error('Error creating patient:', error);
     res.status(500).json({ message: 'Failed to create patient', error: error.message });
+  }
+};
+
+exports.getAllPatients = async (req, res) => {
+  const userId = req.user.id;
+  const userType = req.user.user_type;
+
+  try {
+    const patients = await getAllPatients(userId, userType);
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error('Error fetching patients:', error);
+    res.status(500).json({ message: 'Failed to fetch patients', error: error.message });
   }
 };
 

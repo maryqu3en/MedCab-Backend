@@ -1,6 +1,5 @@
 const userModel = require('../models/user.model');
 
-// POST /register
 exports.register = async (req, res) => {
     try {
         const result = await userModel.register(req.body);
@@ -10,7 +9,6 @@ exports.register = async (req, res) => {
     }
 };
 
-// POST /login
 exports.login = async (req, res) => {
     try {
         const result = await userModel.login(req.body);
@@ -20,7 +18,6 @@ exports.login = async (req, res) => {
     }
 };
 
-// POST /logout
 exports.logout = async (req, res) => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
@@ -33,11 +30,15 @@ exports.logout = async (req, res) => {
     }
 };
 
-// GET /profile
-exports.getProfile = (req, res) => {
-    res.status(200).json({ user: req.user });
+exports.getProfile = async (req, res) => {
+    try {
+        const userProfile = await userModel.getUserProfile(req.user.id);
+        res.status(200).json(userProfile);
+    } catch (err) {
+        console.error('Error fetching user profile:', err);
+        res.status(err.status || 500).json({ message: err.message });
+    }
 };
-
 // GET /users
 exports.getUsers = async (req, res) => {
     try {

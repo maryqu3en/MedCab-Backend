@@ -7,7 +7,7 @@ const options = {
     info: {
       title: "MedCab API",
       version: "1.0.0",
-      description: "🚑 MedCab – Empowering Medical Communication.\n\nExplore all endpoints used in the backend.",
+      description: "MedCab – Empowering Medical Communication.\n\nExplore all endpoints used in the backend.",
     },
     servers: [
       {
@@ -120,7 +120,7 @@ const uiOptions = {
       border-radius: 8px;
     }
   `,
-  customSiteTitle: "🌿 MedCab API Docs",
+  customSiteTitle: "MedCab API Docs",
   // customfavIcon: "https://your-cool-favicon.url", // Optional
 };
 

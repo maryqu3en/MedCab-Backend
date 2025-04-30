@@ -22,6 +22,8 @@ tech stack choice
 data modeling
 data seeding
 
+# urgency of patient condition
+
 ---
 
 ---

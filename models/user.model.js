@@ -38,8 +38,125 @@ exports.logout = async (token) => {
     await deleteToken(token);
 };
 
+exports.getUserProfile = async (id) => {
+    const user = await prisma.user.findUnique({
+        where: { id },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            user_type: true,
+            createdAt: true,
+            updatedAt: true,
+            Doctor: {
+                select: {
+                    phone: true,
+                    specialty: true,
+                },
+            },
+            Staff: {
+                select: {
+                    phone: true,
+                    role: true,
+                },
+            },
+        },
+    });
+    if (!user) throw { status: 404, message: 'User not found' };
+    return user;
+};
+
 exports.getAllUsers = async () => {
-    return await prisma.user.findMany();
+    return await prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            user_type: true,
+            createdAt: true,
+            updatedAt: true,
+            Doctor: {
+                select: {
+                    phone: true,
+                    specialty: true,
+                },
+            },
+            Staff: {
+                select: {
+                    phone: true,
+                    role: true,
+                },
+            },
+        },
+    });
+};
+
+exports.getAllDoctors = async () => {
+    return await prisma.doctor.findMany({
+        include: {
+            User: {
+                select: {
+                    name: true,
+                    email: true
+                },
+            },
+        },
+    });
+};
+
+exports.getAllStaff = async () => {
+    return await prisma.staff.findMany({
+        include: {
+            User: {
+                select: {
+                    name: true,
+                    email: true
+                },
+            },
+        },
+    });
+};
+
+
+
+exports.updateUser = async (id, data) => {
+    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
+    if (!user) throw { status: 404, message: 'User not found' };
+
+    if (data.password) {
+        data.password = await hashPassword(data.password);
+    }
+    
+    const updatedUser = await prisma.user.update({
+        where: { id: parseInt(id) },
+        data: {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+        },
+    });
+
+    if (user.user_type === 'doctor' && (data.phone || data.specialty)) {
+        await prisma.doctor.update({
+            where: { id: user.id },
+            data: {
+                phone: data.phone,
+                specialty: data.specialty,
+            },
+        });
+    }
+
+    if (user.user_type === 'staff' && (data.phone || data.role)) {
+        await prisma.staff.update({
+            where: { id: user.id },
+            data: {
+                phone: data.phone,
+                role: data.role,
+            },
+        });
+    }
+
+    return updatedUser;
 };
 
 exports.getUserById = async (id) => {
@@ -48,20 +165,6 @@ exports.getUserById = async (id) => {
     return user;
 };
 
-exports.updateUser = async (id, data) => {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
-    if (!user) throw { status: 404, message: 'User not found' };
-
-    // Optional: rehash password if provided
-    if (data.password) {
-        data.password = await hashPassword(data.password);
-    }
-
-    return await prisma.user.update({
-        where: { id: parseInt(id) },
-        data
-    });
-};
 
 exports.deleteUser = async (id) => {
     const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
@@ -69,17 +172,6 @@ exports.deleteUser = async (id) => {
     await prisma.user.delete({ where: { id: parseInt(id) } });
 };
 
-exports.getUserProfile = async (id) => {
-    const user = await prisma.user.findUnique({
-        where: { id: parseInt(id) },
-        include: {
-            doctor: true,
-            staff: true,
-        },
-    });
-    if (!user) throw { status: 404, message: 'User not found' };
-    return user;
-};
 
 exports.updateUserProfile = async (id, data) => {
     const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });

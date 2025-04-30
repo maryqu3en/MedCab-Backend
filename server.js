@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const connectDB = require('./config/mongodb');
+// const connectDB = require('./config/mongodb');
 const prisma = require('./config/prisma');
 const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
@@ -30,7 +30,7 @@ app.get('/', (req, res, next) => {
   try {
     res.send('API is running...');
   } catch (error) {
-    next(error); // Pass the error to the errorHandler middleware
+    next(error);
   }
 });
 
