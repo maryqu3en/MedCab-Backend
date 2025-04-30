@@ -37,6 +37,8 @@ exports.updateUserRules = [
     check('usertype').optional().not().isEmpty().withMessage('Usertype is required'),
 ];
 
+
+
 exports.validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

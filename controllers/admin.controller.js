@@ -1,4 +1,5 @@
-const { updateDoctorStatus, updateStaffStatus, getDashboardData } = require('../models/admin.model');
+const { getDashboardData } = require('../models/admin.model');
+const { updateDoctorStatus, updateStaffStatus } = require('../models/user.model');
 
 exports.updateUserStatus = async (req, res) => {
     const { id } = req.params;
