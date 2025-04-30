@@ -85,6 +85,19 @@ exports.updateUser = async (req, res) => {
     }
 };
 
+exports.updateUserProfile = async (req, res) => {
+    const userId = req.user.id;
+    const data = req.body;
+
+    try {
+        const updatedUser = await userModel.updateUserProfile(userId, data);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        res.status(error.status || 500).json({ message: error.message });
+    }
+};
+
 exports.deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(req.params.id);

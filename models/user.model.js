@@ -68,6 +68,7 @@ exports.getUserProfile = async (id) => {
 
 exports.getAllUsers = async () => {
     return await prisma.user.findMany({
+        where: { deletedAt: null }, // Exclude soft-deleted users
         select: {
             id: true,
             name: true,
@@ -93,9 +94,11 @@ exports.getAllUsers = async () => {
 
 exports.getAllDoctors = async () => {
     return await prisma.doctor.findMany({
+        where: { deletedAt: null },
         include: {
             User: {
                 select: {
+                    id: true,
                     name: true,
                     email: true
                 },
@@ -106,29 +109,29 @@ exports.getAllDoctors = async () => {
 
 exports.getAllStaff = async () => {
     return await prisma.staff.findMany({
+        where: { deletedAt: null },
         include: {
             User: {
                 select: {
+                    id: true,
                     name: true,
-                    email: true
+                    email: true,
                 },
             },
-        },
+        }
     });
 };
 
-
-
 exports.updateUser = async (id, data) => {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
+    const user = await prisma.user.findUnique({ where: { id } });
     if (!user) throw { status: 404, message: 'User not found' };
 
     if (data.password) {
         data.password = await hashPassword(data.password);
     }
-    
+
     const updatedUser = await prisma.user.update({
-        where: { id: parseInt(id) },
+        where: { id },
         data: {
             name: data.name,
             email: data.email,
@@ -160,31 +163,66 @@ exports.updateUser = async (id, data) => {
 };
 
 exports.getUserById = async (id) => {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
+    const user = await prisma.user.findUnique({
+        where: { id },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            user_type: true,
+            createdAt: true,
+            updatedAt: true,
+            Doctor: {
+                select: {
+                    phone: true,
+                    specialty: true,
+                },
+            },
+            Staff: {
+                select: {
+                    phone: true,
+                    role: true,
+                },
+            },
+        }
+    });
     if (!user) throw { status: 404, message: 'User not found' };
     return user;
 };
 
-
-exports.deleteUser = async (id) => {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
-    if (!user) throw { status: 404, message: 'User not found' };
-    await prisma.user.delete({ where: { id: parseInt(id) } });
-};
-
-
 exports.updateUserProfile = async (id, data) => {
-    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
+    const user = await prisma.user.findUnique({ where: { id } });
     if (!user) throw { status: 404, message: 'User not found' };
 
-    // Optional: rehash password if provided
     if (data.password) {
         data.password = await hashPassword(data.password);
     }
 
     return await prisma.user.update({
-        where: { id: parseInt(id) },
+        where: { id },
         data
     });
+};
+
+exports.deleteUser = async (id) => {
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) throw { status: 404, message: 'User not found' };
+
+    await prisma.user.update({
+        where: { id },
+        data: { deletedAt: new Date() },
+    });
+
+    if (user.user_type === 'doctor') {
+        await prisma.doctor.update({
+            where: { id },
+            data: { deletedAt: new Date() },
+        });
+    } else if (user.user_type === 'staff') {
+        await prisma.staff.update({
+            where: { id },
+            data: { deletedAt: new Date() },
+        });
+    }
 };
 

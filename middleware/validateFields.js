@@ -37,23 +37,6 @@ exports.updateUserRules = [
     check('usertype').optional().not().isEmpty().withMessage('Usertype is required'),
 ];
 
-exports.deleteUserRules = [
-    check('id').not().isEmpty().withMessage('ID is required'),
-];
-
-exports.getUserByIdRules = [
-    check('id').not().isEmpty().withMessage('ID is required'),
-];
-
-exports.getUsersRules = [
-    check('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
-    check('limit').optional().isInt({ min: 1 }).withMessage('Limit must be a positive integer'),
-];
-
-exports.getProfileRules = [
-    check('id').not().isEmpty().withMessage('ID is required'),
-];
-
 exports.validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
