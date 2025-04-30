@@ -39,7 +39,7 @@ exports.getProfile = async (req, res) => {
         res.status(err.status || 500).json({ message: err.message });
     }
 };
-// GET /users
+
 exports.getUsers = async (req, res) => {
     try {
         const users = await userModel.getAllUsers();
@@ -49,7 +49,24 @@ exports.getUsers = async (req, res) => {
     }
 };
 
-// GET /users/:id
+exports.getDoctors = async (req, res) => {
+    try {
+        const doctors = await userModel.getAllDoctors();
+        res.status(200).json(doctors);
+    } catch (err) {
+        res.status(err.status || 500).json({ message: err.message });
+    }
+}
+
+exports.getStaff = async (req, res) => {
+    try {
+        const staff = await userModel.getAllStaff();
+        res.status(200).json(staff);
+    } catch (err) {
+        res.status(err.status || 500).json({ message: err.message });
+    }
+}
+
 exports.getUserById = async (req, res) => {
     try {
         const user = await userModel.getUserById(req.params.id);
@@ -59,7 +76,6 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-// PUT /users/:id
 exports.updateUser = async (req, res) => {
     try {
         const updatedUser = await userModel.updateUser(req.params.id, req.body);
@@ -69,7 +85,6 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-// DELETE /users/:id
 exports.deleteUser = async (req, res) => {
     try {
         await userModel.deleteUser(req.params.id);

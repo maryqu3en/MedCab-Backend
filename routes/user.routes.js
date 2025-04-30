@@ -12,6 +12,8 @@ router.get('/logout', authenticate, userController.logout);
 router.get('/profile', authenticate, userController.getProfile);
 
 router.get('/users', authenticate, authorize('admin'), userController.getUsers);
+router.get('/doctors', authenticate, authorize('admin'), userController.getDoctors);
+router.get('/staff', authenticate, authorize('admin'), userController.getStaff);
 router.get('/users/:id', authenticate, authorize('admin'), userController.getUserById);
 router.put('/users/:id', authenticate, authorize('admin', 'doctor'), userController.updateUser);
 router.delete('/users/:id', authenticate, authorize('admin'), userController.deleteUser);
