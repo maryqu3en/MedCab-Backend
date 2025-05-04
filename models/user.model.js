@@ -224,8 +224,11 @@ exports.deleteUser = async (id) => {
             data: { deletedAt: new Date() },
         });
     }
-};
 
+    await prisma.token.deleteMany({
+        where: { user_id: id },
+    });
+};
 
 exports.updateDoctorStatus = async (id, status, adminId) => {
     const updated = await prisma.doctor.updateMany({

@@ -13,6 +13,8 @@ const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
 const adminRoutes = require('./routes/admin.routes');
 const patientRoutes = require('./routes/patient.routes');
+const consultationController = require('./routes/consultation.routes');
+const medicalRecordController = require('./routes/medicalRecord.routes');
 
 const app = express();
 
@@ -38,6 +40,8 @@ app.use('/health', healthRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/patient', patientRoutes);
+app.use('/api/consultations', consultationController);
+app.use('/api/record', medicalRecordController);
 
 app.get('/api/medicines', (req, res) => {
   const filePath = path.join(__dirname, 'medicines.xlsx');
