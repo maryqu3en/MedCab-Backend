@@ -13,9 +13,9 @@ const router = express.Router();
 
 router.post('/', authenticate, createPatient);
 router.get('/', authenticate, getAllPatients);
-router.get('/:id', getPatient); // Get a patient by ID
-router.put('/:id', updatePatient); // Update a patient by ID
-router.delete('/:id', deletePatient); // Delete a patient by ID
-router.get('/:id/records', getPatientRecords); // Get medical records for a patient
+router.get('/:id', getPatient);
+router.put('/:id', updatePatient);
+router.delete('/:id', deletePatient);
+router.get('/:id/records', getPatientRecords);
 
 module.exports = router;

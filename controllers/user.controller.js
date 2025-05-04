@@ -1,4 +1,5 @@
 const userModel = require('../models/user.model');
+const { verifyToken } = require('../utils/jwt.utils'); // Import the verifyToken function
 
 exports.register = async (req, res) => {
     try {
@@ -15,6 +16,37 @@ exports.login = async (req, res) => {
         res.status(200).json(result);
     } catch (err) {
         res.status(err.status || 500).json({ message: err.message });
+    }
+};
+
+exports.verifyToken = async (req, res) => {
+    try {
+        const token = req.headers.authorization?.split(' ')[1]; // Extract the token from the Authorization header
+        if (!token) {
+            return res.status(401).json({ message: 'Token is required' });
+        }
+
+        const decoded = verifyToken(token);
+
+        const user = {
+            id: decoded.id,
+            email: decoded.email,
+            user_type: decoded.type,
+        };
+
+        res.status(200).json({
+            message: 'Token is valid',
+            user,
+        });
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Token has expired' });
+        }
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        res.status(500).json({ message: 'Failed to verify token', error: error.message });
     }
 };
 

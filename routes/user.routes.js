@@ -7,6 +7,7 @@ const userController = require('../controllers/user.controller');
 
 router.post('/register', fieldValidator.registerRules, fieldValidator.validate, userController.register);
 router.post('/login', fieldValidator.loginRules, fieldValidator.validate, userController.login);
+router.get('/verify-token', userController.verifyToken);
 
 router.get('/logout', authenticate, userController.logout);
 router.get('/profile', authenticate, userController.getProfile);
@@ -273,6 +274,43 @@ module.exports = router;
  *           description: User profile updated successfully
  *         404:
  *           description: User not found
+ *         500:
+ *           description: Internal server error
+ *   /api/user/verify-token:
+ *     get:
+ *       summary: Verify a user's token
+ *       tags:
+ *         - Users
+ *       security:
+ *         - bearerAuth: []
+ *       responses:
+ *         200:
+ *           description: Token is valid
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ *                     example: Token is valid
+ *                   user:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: user-id-123
+ *                       name:
+ *                         type: string
+ *                         example: John Doe
+ *                       email:
+ *                         type: string
+ *                         example: john.doe@example.com
+ *                       user_type:
+ *                         type: string
+ *                         example: doctor
+ *         401:
+ *           description: Unauthorized (invalid or missing token)
  *         500:
  *           description: Internal server error
  * 

@@ -25,7 +25,6 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-// your favorite palette:
 const palette = {
   primary: "#64537d",        // smoky
   secondary: "#736c8a",      // rum
@@ -121,7 +120,7 @@ const uiOptions = {
     }
   `,
   customSiteTitle: "MedCab API Docs",
-  // customfavIcon: "https://your-cool-favicon.url", // Optional
+  // customfavIcon: "https://your-cool-favicon.url",
 };
 
 module.exports = { swaggerUi, specs, uiOptions };
