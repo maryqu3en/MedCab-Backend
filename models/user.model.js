@@ -247,3 +247,41 @@ exports.updateStaffStatus = async (id, status, adminId) => {
 
     return updated.count > 0;
 };
+
+exports.getDoctorById = async (id) => {
+    const doctor = await prisma.doctor.findUnique({
+        where: { id },
+        include: {
+            User: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    user_type: true,
+                },
+            },
+        },
+    });
+
+    if (!doctor) throw { status: 404, message: 'Doctor not found' };
+    return doctor;
+};
+
+exports.getStaffById = async (id) => {
+    const staff = await prisma.staff.findUnique({
+        where: { id },
+        include: {
+            User: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    user_type: true,
+                },
+            },
+        },
+    });
+
+    if (!staff) throw { status: 404, message: 'Staff member not found' };
+    return staff;
+};

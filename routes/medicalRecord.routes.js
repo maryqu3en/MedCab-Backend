@@ -96,7 +96,6 @@ module.exports = router;
  *           description: Medical record not found
  *         500:
  *           description: Internal server error
- *   /api/medical-records/{medicalRecordId}:
  *     get:
  *       summary: Get a medical record by ID
  *       tags:

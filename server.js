@@ -39,7 +39,7 @@ app.get('/', (req, res, next) => {
 app.use('/health', healthRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/patient', patientRoutes);
+app.use('/api/patients', patientRoutes);
 app.use('/api/consultations', consultationController);
 app.use('/api/record', medicalRecordController);
 

@@ -1,4 +1,4 @@
-const { getAllPatients, createPatient, getPatientById, updatePatient, deletePatient, getPatientRecords } = require('../models/patient.model');
+const { searchPatientsByName, getAllPatients, createPatient, getPatientById, updatePatient, deletePatient, getPatientRecords } = require('../models/patient.model');
 
 exports.createPatient = async (req, res) => {
   const { name, birth_date, gender } = req.body;
@@ -99,5 +99,21 @@ exports.getPatientRecords = async (req, res) => {
   } catch (error) {
     console.error('Error fetching patient records:', error);
     res.status(500).json({ message: 'Failed to fetch patient records', error: error.message });
+  }
+};
+
+exports.searchPatientsByName = async (req, res) => {
+  const { name } = req.query;
+
+  if (!name) {
+    return res.status(400).json({ message: 'Name query parameter is required' });
+  }
+
+  try {
+    const patients = await searchPatientsByName(name);
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error('Error searching patients by name:', error);
+    res.status(500).json({ message: 'Failed to search patients', error: error.message });
   }
 };

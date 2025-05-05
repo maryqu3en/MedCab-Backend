@@ -1,5 +1,5 @@
 const userModel = require('../models/user.model');
-const { verifyToken } = require('../utils/jwt.utils'); // Import the verifyToken function
+const { verifyToken } = require('../utils/jwt.utils');
 
 exports.register = async (req, res) => {
     try {
@@ -28,15 +28,28 @@ exports.verifyToken = async (req, res) => {
 
         const decoded = verifyToken(token);
 
-        const user = {
-            id: decoded.id,
-            email: decoded.email,
-            user_type: decoded.type,
-        };
+        const user = await userModel.getUserById(decoded.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        let status = null;
+        if (user.user_type === 'doctor') {
+            const doctor = await userModel.getDoctorById(user.id);
+            status = doctor?.status || null;
+        } else if (user.user_type === 'staff') {
+            const staff = await userModel.getStaffById(user.id);
+            status = staff?.status || null;
+        }
 
         res.status(200).json({
-            message: 'Token is valid',
-            user,
+            user: {
+                id: user.id,
+                email: user.email,
+                user_type: user.user_type,
+                status, // Include the status if applicable
+            },
         });
     } catch (error) {
         console.error('Error verifying token:', error);
