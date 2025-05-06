@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -23,7 +22,6 @@ model User {
   Tokens         Token[]  @relation("UserTokens")
   CreatedDoctors Doctor[] @relation("CreatedDoctors")
   CreatedStaff   Staff[]  @relation("CreatedStaff")
-  Logs           Log[]    @relation("UserLogs")
 }
 
 model Doctor {
@@ -74,18 +72,6 @@ model Patient {
   deleted_at DateTime?
 
   MedicalRecords MedicalRecord[] @relation("PatientMedicalRecords")
-}
-
-model Log {
-  id           String         @id @default(uuid())
-  user_id      String?
-  action       LogAction
-  target_table LogTargetTable
-  target_id    LogTargetId
-  details      String?
-  created_at   DateTime       @default(now())
-
-  User User? @relation("UserLogs", fields: [user_id], references: [id])
 }
 
 model MedicalRecord {
