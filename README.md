@@ -1,3 +1,158 @@
+### 📦 `User`
+
+* **id**: String (PK)
+* name: String
+* email: String `@unique`
+* password: String
+* user\_type: UserType (enum)
+* createdAt: DateTime
+* updatedAt: DateTime
+* deletedAt: DateTime?
+
+**Relations:**
+
+* 1 → 1: Doctor (`UserDoctor`)
+* 1 → 1: Staff (`UserStaff`)
+* 1 → \*: Token (`UserTokens`)
+* 1 → \*: Doctor (`CreatedDoctors`) as creator
+* 1 → \*: Staff (`CreatedStaff`) as creator
+
+---
+
+### 📦 `Doctor`
+
+* **id**: String (PK)
+* phone: String
+* specialty: String
+* created\_by: String?
+* status: Status (enum)
+* createdAt: DateTime
+* updatedAt: DateTime
+* deletedAt: DateTime?
+
+**Relations:**
+
+* 1 → 1: User (`UserDoctor`)
+* * → 1: User (as creator, `CreatedDoctors`)
+* 1 → \*: MedicalRecord (`DoctorMedicalRecords`)
+
+---
+
+### 📦 `Staff`
+
+* **id**: String (PK)
+* phone: String?
+* role: StaffRole (enum)
+* created\_by: String?
+* status: Status (enum)
+* createdAt: DateTime
+* updatedAt: DateTime
+* deletedAt: DateTime?
+
+**Relations:**
+
+* 1 → 1: User (`UserStaff`)
+* * → 1: User (as creator, `CreatedStaff`)
+
+---
+
+### 📦 `Token`
+
+* **id**: String (PK)
+* user\_id: String?
+* refresh\_token: String
+* expires\_at: DateTime
+
+**Relations:**
+
+* * → 1: User (`UserTokens`)
+
+---
+
+### 📦 `Patient`
+
+* **id**: String (PK)
+* name: String
+* birth\_date: DateTime?
+* gender: Gender (enum)
+* created\_at: DateTime
+* updated\_at: DateTime
+* deleted\_at: DateTime?
+
+**Relations:**
+
+* 1 → \*: MedicalRecord (`PatientMedicalRecords`)
+
+---
+
+### 📦 `MedicalRecord`
+
+* **id**: String (PK)
+* patient\_id: String
+* created\_by: String
+* createdAt: DateTime
+* updatedAt: DateTime
+
+**Relations:**
+
+* * → 1: Doctor (`DoctorMedicalRecords`)
+* * → 1: Patient (`PatientMedicalRecords`)
+* 1 → \*: ConsultationSession (`MedicalRecordConsultations`)
+
+---
+
+### 📦 `ConsultationSession`
+
+* **id**: String (PK)
+* medicalRecordId: String
+* antecedentsPersonnels: Json?
+* antecedentsFamiliaux: Json?
+* hdmSymptoms: Json?
+* clinicalExam: Json?
+* diagnosis: String?
+* treatments: String?
+* createdAt: DateTime
+
+**Relations:**
+
+* * → 1: MedicalRecord (`MedicalRecordConsultations`)
+* 1 → \*: ComplementaryExam (`ConsultationComplementaryExams`)
+
+---
+
+### 📦 `ComplementaryExam`
+
+* **id**: String (PK)
+* consultationSessionId: String
+* type: String
+* exam: String
+* result: Json?
+* createdAt: DateTime
+
+**Relations:**
+
+* * → 1: ConsultationSession (`ConsultationComplementaryExams`)
+
+---
+
+### 🧮 Enums
+
+* **UserType**: `doctor | staff | admin`
+* **Status**: `pending | active | inactive`
+* **StaffRole**: `nurse | receptionist`
+* **Gender**: `male | female`
+* **LogAction**: `CREATE | UPDATE | DELETE`
+* **LogTargetTable**: `User | Doctor | Staff | Token | Patient`
+* **LogTargetId**: `id | user_id | doctor_id | staff_id | token_id | patient_id`
+
+---
+
+Would you like a Mermaid diagram version for documentation or a visual render next?
+
+
+
+
+
 # MedCab Backend
 
 Admin Panel Features

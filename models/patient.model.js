@@ -22,7 +22,7 @@ exports.getAllPatients = async (userId, userType) => {
   if (userType === 'doctor') {
     return await prisma.patient.findMany({
       where: {
-        deletedAt: null,
+        deleted_at: null,
         MedicalRecords: {
           some: {
             created_by: userId,
@@ -36,7 +36,7 @@ exports.getAllPatients = async (userId, userType) => {
   } else if (userType === 'admin') {
     return await prisma.patient.findMany({
       where: {
-        deletedAt: null,
+        deleted_at: null,
       },
       include: {
         MedicalRecords: true,
@@ -47,7 +47,7 @@ exports.getAllPatients = async (userId, userType) => {
 
 exports.getPatientById = async (id) => {
   return await prisma.patient.findUnique({
-    where: { id, deletedAt: null },
+    where: { id, deleted_at: null },
     include: {
       MedicalRecords: true,
     },
@@ -82,7 +82,7 @@ exports.getPatientRecords = async (patientId) => {
 exports.searchPatientsByName = async (name) => {
   return await prisma.patient.findMany({
     where: {
-      deletedAt: null,
+      deleted_at: null,
       name: {
         contains: name,
         mode: 'insensitive',
