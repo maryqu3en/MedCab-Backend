@@ -10,7 +10,6 @@ router.get("/dashboard", authenticate, authorize("admin"), adminController.getAd
 
 module.exports = router;
 
-// swagger documentation
 /**
  * @swagger
  * tags:

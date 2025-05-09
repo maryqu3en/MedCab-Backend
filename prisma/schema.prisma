@@ -22,6 +22,7 @@ model User {
   Tokens         Token[]  @relation("UserTokens")
   CreatedDoctors Doctor[] @relation("CreatedDoctors")
   CreatedStaff   Staff[]  @relation("CreatedStaff")
+  SentMessages   CommunicationLog[] @relation("UserMessages")
 }
 
 model Doctor {
@@ -36,7 +37,7 @@ model Doctor {
 
   User           User            @relation("UserDoctor", fields: [id], references: [id])
   Creator        User?           @relation("CreatedDoctors", fields: [created_by], references: [id])
-  MedicalRecords MedicalRecord[] @relation("DoctorMedicalRecords") // New relation
+  MedicalRecords MedicalRecord[] @relation("DoctorMedicalRecords")
 }
 
 model Staff {
@@ -104,12 +105,22 @@ model ConsultationSession {
 model ComplementaryExam {
   id                    String   @id @default(uuid())
   consultationSessionId String
-  type                  String // "sang", "urine", etc
+  type                  String
   exam                  String
   result                Json?
   createdAt             DateTime @default(now())
 
   ConsultationSession ConsultationSession @relation("ConsultationComplementaryExams", fields: [consultationSessionId], references: [id])
+}
+
+model CommunicationLog {
+  id        String   @id @default(uuid())
+  roomId    String
+  senderId  String
+  message   String
+  createdAt DateTime @default(now())
+
+  Sender User @relation("UserMessages", fields: [senderId], references: [id])
 }
 
 enum Gender {

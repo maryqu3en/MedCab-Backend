@@ -198,9 +198,23 @@ exports.updateUserProfile = async (id, data) => {
         data.password = await hashPassword(data.password);
     }
 
+    const updateData = {
+        name: data.name,
+        email: data.email,
+    };
+
+    if (data.Doctor) {
+        updateData.Doctor = {
+            update: {
+                phone: data.Doctor.phone,
+                specialty: data.Doctor.specialty,
+            },
+        };
+    }
+
     return await prisma.user.update({
         where: { id },
-        data
+        data: updateData,
     });
 };
 

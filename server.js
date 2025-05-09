@@ -2,12 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-// const connectDB = require('./config/mongodb');
-const prisma = require('./config/prisma');
 const { swaggerUi, specs, uiOptions } = require("./docs/swagger");
 const { logger } = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/error.middleware');
 const XLSX = require('xlsx');
+const { initSocket } = require('./config/socket.config');
 
 const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
@@ -15,6 +14,7 @@ const adminRoutes = require('./routes/admin.routes');
 const patientRoutes = require('./routes/patient.routes');
 const consultationController = require('./routes/consultation.routes');
 const medicalRecordController = require('./routes/medicalRecord.routes');
+const communicationRoutes = require('./routes/communication.routes');
 
 const app = express();
 
@@ -42,6 +42,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/consultations', consultationController);
 app.use('/api/record', medicalRecordController);
+app.use('/api/communications', communicationRoutes);
 
 app.get('/api/medicines', (req, res) => {
   const filePath = path.join(__dirname, 'medicines.xlsx');
@@ -59,10 +60,9 @@ app.get('/api/medicines', (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-// connectDB();
-
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
 });
-// initializeSocket(server);
+
+initSocket(server);
