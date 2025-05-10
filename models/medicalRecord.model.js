@@ -27,3 +27,60 @@ exports.getMedicalRecordById = async (medicalRecordId) => {
         },
     });
 };
+
+// Fetch all medical records
+exports.getAllMedicalRecords = async () => {
+    return await prisma.medicalRecord.findMany({
+        include: {
+            Patient: true, // Include patient details
+            Doctor: {
+                include: {
+                    User: true, // Include doctor user details
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc', // Order by most recent records
+        },
+    });
+};
+
+// Fetch all medical records for a specific doctor
+exports.getMedicalRecordsByDoctorId = async (doctorId) => {
+    return await prisma.medicalRecord.findMany({
+        where: {
+            created_by: doctorId, // Filter by doctor ID
+        },
+        include: {
+            Patient: true, // Include patient details
+        },
+        orderBy: {
+            createdAt: 'desc', // Order by most recent records
+        },
+    });
+};
+
+// Search medical records by patient name
+exports.searchMedicalRecordsByPatientName = async (name) => {
+    return await prisma.medicalRecord.findMany({
+        where: {
+            Patient: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive', // Case-insensitive search
+                },
+            },
+        },
+        include: {
+            Patient: true, // Include patient details
+            Doctor: {
+                include: {
+                    User: true, // Include doctor user details
+                },
+            },
+        },
+        orderBy: {
+            createdAt: 'desc', // Order by most recent records
+        },
+    });
+};

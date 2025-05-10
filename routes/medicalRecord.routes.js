@@ -3,6 +3,12 @@ const router = express.Router();
 const authenticate = require('../middleware/auth.middleware');
 const medicalRecordController = require('../controllers/medicalRecord.controller');
 
+router.get('/', authenticate, medicalRecordController.getAllMedicalRecords);
+
+router.get('/doctor/:doctorId', authenticate, medicalRecordController.getMedicalRecordsByDoctorId);
+
+router.get('/search', authenticate, medicalRecordController.searchMedicalRecordsByPatientName);
+
 router.post('/:medicalRecordId/consultations', authenticate, medicalRecordController.addConsultation);
 
 router.put('/:medicalRecordId', authenticate, medicalRecordController.updateMedicalRecord);
@@ -15,6 +21,60 @@ module.exports = router;
 /**
  * @swagger
  * paths:
+ *   /api/medical-records:
+ *     get:
+ *       summary: Fetch all medical records
+ *       tags:
+ *         - Medical Records
+ *       security:
+ *         - bearerAuth: []
+ *       responses:
+ *         200:
+ *           description: List of all medical records retrieved successfully
+ *         500:
+ *           description: Internal server error
+ *   /api/medical-records/doctor/{doctorId}:
+ *     get:
+ *       summary: Fetch all medical records for a specific doctor
+ *       tags:
+ *         - Medical Records
+ *       security:
+ *         - bearerAuth: []
+ *       parameters:
+ *         - name: doctorId
+ *           in: path
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: ID of the doctor
+ *       responses:
+ *         200:
+ *           description: List of medical records for the doctor retrieved successfully
+ *         404:
+ *           description: Doctor not found
+ *         500:
+ *           description: Internal server error
+ *   /api/medical-records/search:
+ *     get:
+ *       summary: Search medical records by patient name
+ *       tags:
+ *         - Medical Records
+ *       security:
+ *         - bearerAuth: []
+ *       parameters:
+ *         - name: patientName
+ *           in: query
+ *           required: true
+ *           schema:
+ *             type: string
+ *           description: Name of the patient to search for
+ *       responses:
+ *         200:
+ *           description: List of medical records matching the patient name retrieved successfully
+ *         404:
+ *           description: No medical records found for the given patient name
+ *         500:
+ *           description: Internal server error
  *   /api/medical-records/{medicalRecordId}/consultations:
  *     post:
  *       summary: Add a consultation to a medical record
