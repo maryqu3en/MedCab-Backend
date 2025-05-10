@@ -22,6 +22,8 @@ module.exports = router;
  *   patch:
  *     summary: Update user status
  *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: [] # Requires Authorization header with Bearer token
  *     parameters:
  *       - in: path
  *         name: id
@@ -42,10 +44,13 @@ module.exports = router;
  *               usertype: 
  *                 type: string
  *                 enum: [staff, doctor]
- * 
  *     responses:
  *       200:
  *         description: User status updated successfully
+ *       401:
+ *         description: Unauthorized - Token is missing or invalid
+ *       403:
+ *         description: Forbidden - User is not authorized
  */
 /**
  * @swagger
@@ -53,6 +58,8 @@ module.exports = router;
  *   get:
  *     summary: Get admin dashboard data
  *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: [] # Requires Authorization header with Bearer token
  *     responses:
  *       200:
  *         description: Admin dashboard data retrieved successfully
@@ -63,8 +70,15 @@ module.exports = router;
  *               properties:
  *                 totalStaff:
  *                   type: integer
+ *                   example: 10
  *                 totalPatients:
  *                   type: integer
+ *                   example: 50
  *                 totalDoctors:
  *                   type: integer
+ *                   example: 20
+ *       401:
+ *         description: Unauthorized - Token is missing or invalid
+ *       403:
+ *         description: Forbidden - User is not authorized
  */

@@ -46,9 +46,12 @@ exports.verifyToken = async (req, res) => {
         res.status(200).json({
             user: {
                 id: user.id,
+                name: user.name,
                 email: user.email,
                 user_type: user.user_type,
-                status, // Include the status if applicable
+                status,
+                created_at: user.createdAt,
+                updated_at: user.updatedAt,
             },
         });
     } catch (error) {

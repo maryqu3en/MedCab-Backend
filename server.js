@@ -41,7 +41,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/consultations', consultationController);
-app.use('/api/record', medicalRecordController);
+app.use('/api/medical-records', medicalRecordController);
 app.use('/api/communications', communicationRoutes);
 
 app.get('/api/medicines', (req, res) => {
