@@ -12,7 +12,7 @@ router.get('/verify-token', userController.verifyToken);
 router.get('/logout', authenticate, userController.logout);
 router.get('/profile', authenticate, userController.getProfile);
 
-router.get('/users', authenticate, authorize('admin'), userController.getUsers);
+router.get('/users', authenticate, userController.getUsers);
 router.get('/doctors', authenticate, authorize('admin'), userController.getDoctors);
 router.get('/staff', authenticate, authorize('admin'), userController.getStaff);
 router.get('/:id', authenticate, authorize('admin'), userController.getUserById);

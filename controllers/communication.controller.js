@@ -1,13 +1,24 @@
 const communicationModel = require('../models/communication.model');
 
-exports.getLogsByRoomId = async (req, res) => {
+exports.getMessages = async (req, res) => {
+  try {
     const { roomId } = req.params;
+    const messages = await communicationModel.getMessagesByRoomId(roomId);
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to get messages', error });
+  }
+};
 
-    try {
-        const logs = await communicationModel.getLogsByRoomId(roomId);
-        res.status(200).json(logs);
-    } catch (error) {
-        console.error('Error fetching communication logs:', error);
-        res.status(500).json({ message: 'Failed to fetch communication logs', error: error.message });
-    }
+exports.postMessage = async (req, res) => {
+  try {
+    const { roomId, senderId, message } = req.body;
+    const newMessage = await communicationModel.createMessage(roomId, senderId, message);
+
+    req.app.get('io').to(roomId).emit('receiveMessage', newMessage); // Emit after saving
+
+    res.status(201).json(newMessage);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to send message', error });
+  }
 };
