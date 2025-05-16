@@ -16,6 +16,14 @@ const initSocket = (server) => {
       console.log(`Socket ${socket.id} joined room ${roomId}`);
     });
 
+    socket.on('typing', ({ roomId, senderId }) => {
+      socket.to(roomId).emit('typing', { senderId });
+    });
+  
+    socket.on('stopTyping', ({ roomId, senderId }) => {
+      socket.to(roomId).emit('stopTyping', { senderId });
+    });
+
     socket.on('sendMessage', ({ roomId, senderId, message }) => {
       const createdAt = new Date().toISOString();
       io.to(roomId).emit('receiveMessage', { senderId, message, createdAt });
