@@ -29,9 +29,9 @@ exports.login = async ({ email, password }) => {
 
     const match = await comparePassword(password, user.password);
     if (!match) throw { status: 401, message: 'Invalid credentials' };
-
+    const { password: _, ...userWithoutPassword } = user;
     const token = await generateToken(user);
-    return { user, token };
+    return { user: userWithoutPassword, token };
 };
 
 exports.logout = async (token) => {

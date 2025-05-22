@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const XLSX = require('xlsx');
 require('dotenv').config();
 const { swaggerUi, specs, uiOptions } = require('./docs/swagger');
 const { logger } = require('./middleware/logger');
@@ -42,6 +43,19 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/consultations', consultationRoutes);
 app.use('/api/medical-records', medicalRecordRoutes);
 app.use('/api/communications', communicationRoutes);
+
+app.get('/api/medicines', (req, res) => {
+  const filePath = path.join(__dirname, 'medicines.xlsx');
+  try {
+    const workbook = XLSX.readFile(filePath);
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to read Excel file', error: error.message });
+  }
+});
 
 app.use(notFound);
 app.use(errorHandler);
