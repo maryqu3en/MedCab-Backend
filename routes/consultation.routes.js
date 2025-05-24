@@ -19,7 +19,7 @@ router.get('/search-by-name', authenticate, consultationController.searchConsult
 router.get('/', authenticate, consultationController.getAllConsultations);
 
 // Get consultations for a specific doctor
-router.get('/doctor/:doctorId', authenticate, consultationController.getConsultationsByDoctorId);
+router.get('/doctor/:doctorId', authenticate, consultationController.getAllConsultations);
 
 module.exports = router;
 
