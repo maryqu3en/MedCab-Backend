@@ -15,7 +15,7 @@ exports.postMessage = async (req, res) => {
     const { roomId, senderId, message } = req.body;
     const newMessage = await communicationModel.createMessage(roomId, senderId, message);
 
-    req.app.get('io').to(roomId).emit('receiveMessage', newMessage); // Emit after saving
+    req.app.get('io').to(roomId).emit('receiveMessage', newMessage); 
 
     res.status(201).json(newMessage);
   } catch (error) {

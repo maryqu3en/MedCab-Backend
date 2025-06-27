@@ -96,22 +96,21 @@ model ConsultationSession {
   clinicalExam          Json?
   diagnosis             String?
   treatments            String?
-  complementaryExams    ComplementaryExam[] @relation("ConsultationComplementaryExams")
   createdAt             DateTime            @default(now())
 
   MedicalRecord MedicalRecord @relation("MedicalRecordConsultations", fields: [medicalRecordId], references: [id])
 }
 
-model ComplementaryExam {
-  id                    String   @id @default(uuid())
-  consultationSessionId String
-  type                  String
-  exam                  String
-  result                Json?
-  createdAt             DateTime @default(now())
+// model ComplementaryExam {
+//   id                    String   @id @default(uuid())
+//   consultationSessionId String
+//   type                  String
+//   exam                  String
+//   result                Json?
+//   createdAt             DateTime @default(now())
 
-  ConsultationSession ConsultationSession @relation("ConsultationComplementaryExams", fields: [consultationSessionId], references: [id])
-}
+//   ConsultationSession ConsultationSession @relation("ConsultationComplementaryExams", fields: [consultationSessionId], references: [id])
+// }
 
 model CommunicationLog {
   id        String   @id @default(uuid())

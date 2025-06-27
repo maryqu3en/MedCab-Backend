@@ -3,27 +3,20 @@ const router = express.Router();
 const authenticate = require('../middleware/auth.middleware');
 const consultationController = require('../controllers/consultation.controller');
 
-// Create a new consultation
 router.post('/:medicalRecordId', authenticate, consultationController.createConsultation);
 
-// Get all consultations for a medical record
 router.get('/:medicalRecordId', authenticate, consultationController.getConsultationsByMedicalRecordId);
 
-// Search consultations by date
 router.get('/search-by-date', authenticate, consultationController.searchConsultationsByDate);
 
-// Search consultations by patient name
 router.get('/search-by-name', authenticate, consultationController.searchConsultationsByPatientName);
 
-// Get all consultations
 router.get('/', authenticate, consultationController.getAllConsultations);
 
-// Get consultations for a specific doctor
 router.get('/doctor/:doctorId', authenticate, consultationController.getAllConsultations);
 
 module.exports = router;
 
-// Swagger documentation
 /**
  * @swagger
  * paths:
